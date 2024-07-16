@@ -18,6 +18,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.heycar",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDG7KcBlZ_1hVqLEUzAVXxGxWjX_GZKAWo"
+        }
       }
     },
     "web": {

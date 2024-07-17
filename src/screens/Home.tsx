@@ -1,15 +1,13 @@
 import { ScrollView, SectionList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { carData } from "../util/CarsData";
 import RenderItem from "./compoents/RenderItem";
-import Animated from "react-native-reanimated";
 
 import { groupDataByType } from "../util/util";
 import ProfileHeader from "./compoents/ProfileHeader";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { HomeStackParams } from "../navigation/HomeStack";
-import useTabBarStore from "../context/tabBarStore";
 
 const Home = () => {
   const sectionData = groupDataByType(carData);

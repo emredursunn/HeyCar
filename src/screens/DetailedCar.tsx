@@ -9,9 +9,7 @@ import React from "react";
 import Animated, {
   FadeIn,
   FadeInLeft,
-  SharedTransition,
   SlideInDown,
-  withTiming,
 } from "react-native-reanimated";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
@@ -24,6 +22,7 @@ import Header from "./compoents/Header";
 import { AntDesign } from "@expo/vector-icons";
 import useTabBarStore from "../context/tabBarStore";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
+import { transitionLong } from "../util/util";
 
 const BORDER_RADIUS = 30;
 
@@ -37,8 +36,6 @@ const DetailedCar = () => {
   const MATERIAL_COLOR = item.backgroundColor === "#c8d5b9" ? "#000" : "#fff";
   const { setVisible } = useTabBarStore();
 
-
-
   const SPEED_ICON = (
     <Ionicons name="speedometer-outline" size={24} color="black" />
   );
@@ -49,21 +46,13 @@ const DetailedCar = () => {
     <MaterialCommunityIcons name="car-cog" size={24} color="black" />
   );
 
-  const transition = SharedTransition.custom((values) => {
-    "worklet";
-    return {
-      height: withTiming(values.targetHeight, { duration: 1000 }),
-      width: withTiming(values.targetWidth, { duration: 1000 }),
-      originX: withTiming(values.targetOriginX, { duration: 1000 }),
-      originY: withTiming(values.targetOriginY, { duration: 1000 }),
-    };
-  });
-
   return (
     <View style={styles.container}>
+
+      {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
       <Animated.View
         sharedTransitionTag={`box-${item.id}`}
-        sharedTransitionStyle={transition}
+        sharedTransitionStyle={transitionLong}
         style={{
           position: "absolute",
           top: 0,
@@ -74,6 +63,7 @@ const DetailedCar = () => {
           zIndex: 0,
         }}
       />
+      {/**********************************/}
 
       <Animated.View
         entering={FadeIn.delay(500)}
@@ -97,7 +87,7 @@ const DetailedCar = () => {
 
         <Animated.Image
           sharedTransitionTag={`car-${item.id}`}
-          sharedTransitionStyle={transition}
+          sharedTransitionStyle={transitionLong}
           source={item.image}
           style={{
             width: SCREEN_WIDTH,

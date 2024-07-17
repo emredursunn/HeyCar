@@ -1,19 +1,12 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { ScrollView, useWindowDimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import useFavoriteStore from "../context/favoriteStore";
 import { Car, carData } from "../util/CarsData";
 import RenderItem from "./compoents/RenderItem";
-import Animated, { BounceIn, SlideInLeft } from "react-native-reanimated";
+import Animated, { SlideInLeft } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
-import useTabBarStore from "../context/tabBarStore";
 
 const Favorites = () => {
   const { favorites } = useFavoriteStore();

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -11,14 +10,12 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
-import { mapStyle } from "../util/mapStyle";
 import Animated, {
-  SharedTransition,
   SlideInDown,
   SlideInLeft,
-  withTiming,
 } from "react-native-reanimated";
 import { Fontisto } from "@expo/vector-icons";
+import { transitionShort } from "../util/util";
 
 const DetailedRent = () => {
   const route =
@@ -28,15 +25,6 @@ const DetailedRent = () => {
   const item = route.params.item;
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
 
-  const transition = SharedTransition.custom((values) => {
-    "worklet";
-    return {
-      height: withTiming(values.targetHeight, { duration: 500 }),
-      width: withTiming(values.targetWidth, { duration: 500 }),
-      originX: withTiming(values.targetOriginX, { duration: 500 }),
-      originY: withTiming(values.targetOriginY, { duration: 500 }),
-    };
-  });
 
   return (
     <View style={styles.container}>
@@ -53,9 +41,10 @@ const DetailedRent = () => {
         <Marker coordinate={{ ...item.location }} />
       </MapView>
 
+      {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
       <Animated.View
         sharedTransitionTag={`box-${item.id}`}
-        sharedTransitionStyle={transition}
+        sharedTransitionStyle={transitionShort}
         style={[
           styles.orangeBox,
           {
@@ -67,6 +56,8 @@ const DetailedRent = () => {
           },
         ]}
       />
+      {/*************************************/}
+
       <Animated.View
         style={[
           styles.orangeBox,
@@ -81,7 +72,7 @@ const DetailedRent = () => {
       >
         <Animated.Image
           sharedTransitionTag={`car-${item.id}`}
-          sharedTransitionStyle={transition}
+          sharedTransitionStyle={transitionShort}
           source={item.image}
           style={[
             styles.image,

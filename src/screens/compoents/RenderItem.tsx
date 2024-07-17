@@ -1,24 +1,17 @@
 import {
   DimensionValue,
-  Image,
   Pressable,
   StyleSheet,
   Text,
-  useWindowDimensions,
   View,
 } from "react-native";
 import React from "react";
 import { Car } from "../../util/CarsData";
-import Animated, {
-  FadeInDown,
-  FadeInLeft,
-  FadeInRight,
-  SharedTransition,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 
 import { AntDesign } from "@expo/vector-icons";
 import useTabBarStore from "../../context/tabBarStore";
+import { transitionLong, transitionShort } from "../../util/util";
 
 interface ItemProps {
   item: Car;
@@ -43,26 +36,6 @@ const RenderItem = ({
     setVisible(false);
   };
 
-  const transitionCar = SharedTransition.custom((values) => {
-    "worklet";
-    return {
-      height: withTiming(values.targetHeight, { duration: 1000 }),
-      width: withTiming(values.targetWidth, { duration: 1000 }),
-      originX: withTiming(values.targetOriginX, { duration: 1000 }),
-      originY: withTiming(values.targetOriginY, { duration: 1000 }),
-    };
-  });
-
-  const transitionBox = SharedTransition.custom((values) => {
-    "worklet";
-    return {
-      height: withTiming(values.targetHeight, { duration: 500 }),
-      width: withTiming(values.targetWidth, { duration: 500 }),
-      originX: withTiming(values.targetOriginX, { duration: 500 }),
-      originY: withTiming(values.targetOriginY, { duration: 500 }),
-    };
-  });
-
   return (
     <Animated.View
       style={[
@@ -71,19 +44,18 @@ const RenderItem = ({
       ]}
       entering={FadeInDown.delay(200 * index)}
     >
+      {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
       <Animated.View
-        style={[
-          StyleSheet.absoluteFillObject,
-          styles.background,
-          {
-            backgroundColor: item.backgroundColor,
-            zIndex: 1,
-            borderRadius: 20,
-          },
-        ]}
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: item.backgroundColor,
+          zIndex: 1,
+          borderRadius: 20,
+        }}
         sharedTransitionTag={`box-${item.id}`}
-        sharedTransitionStyle={transitionBox}
+        sharedTransitionStyle={transitionShort}
       />
+      {/********************************************************/}
 
       <Pressable
         style={[styles.pressable, { zIndex: 2 }]}
@@ -106,7 +78,7 @@ const RenderItem = ({
           <Animated.Image
             entering={FadeInRight.duration(800).delay(400 * index)}
             sharedTransitionTag={`car-${item.id}`}
-            sharedTransitionStyle={transitionCar}
+            sharedTransitionStyle={transitionLong}
             source={item.image}
             style={styles.image}
             resizeMode={"cover"}
@@ -125,7 +97,14 @@ const RenderItem = ({
           >
             $ {item.price}
           </Text>
-          <Text style={[styles.price, { color: MATERIAL_COLOR, fontStyle:'italic' }]}>/Day</Text>
+          <Text
+            style={[
+              styles.price,
+              { color: MATERIAL_COLOR, fontStyle: "italic" },
+            ]}
+          >
+            /Day
+          </Text>
         </View>
       </Pressable>
     </Animated.View>
@@ -150,8 +129,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: "100%", // Set a fixed width
-    height: "100%", // Set a fixed height
+    width: "100%",
+    height: "100%",
     zIndex: 5,
   },
   rating: {

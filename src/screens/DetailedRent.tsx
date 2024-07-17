@@ -15,6 +15,7 @@ import { mapStyle } from "../util/mapStyle";
 import Animated, {
   SharedTransition,
   SlideInDown,
+  SlideInLeft,
   withTiming,
 } from "react-native-reanimated";
 import { Fontisto } from "@expo/vector-icons";
@@ -30,10 +31,10 @@ const DetailedRent = () => {
   const transition = SharedTransition.custom((values) => {
     "worklet";
     return {
-      height: withTiming(values.targetHeight, { duration: 1000 }),
-      width: withTiming(values.targetWidth, { duration: 1000 }),
-      originX: withTiming(values.targetOriginX, { duration: 1000 }),
-      originY: withTiming(values.targetOriginY, { duration: 1000 }),
+      height: withTiming(values.targetHeight, { duration: 500 }),
+      width: withTiming(values.targetWidth, { duration: 500 }),
+      originX: withTiming(values.targetOriginX, { duration: 500 }),
+      originY: withTiming(values.targetOriginY, { duration: 500 }),
     };
   });
 
@@ -46,15 +47,15 @@ const DetailedRent = () => {
           latitudeDelta: 0.003,
           longitudeDelta: 0.003,
         }}
-        customMapStyle={mapStyle}
         zoomEnabled
-        showsTraffic
         style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.6 }}
       >
         <Marker coordinate={{ ...item.location }} />
       </MapView>
 
       <Animated.View
+        sharedTransitionTag={`box-${item.id}`}
+        sharedTransitionStyle={transition}
         style={[
           styles.orangeBox,
           {
@@ -62,6 +63,19 @@ const DetailedRent = () => {
             width: SCREEN_WIDTH,
             height: SCREEN_HEIGHT * 0.4 + 30 - SCREEN_HEIGHT * 0.3 + 30,
             backgroundColor: item.backgroundColor,
+            zIndex: 1,
+          },
+        ]}
+      />
+      <Animated.View
+        style={[
+          styles.orangeBox,
+          {
+            top: SCREEN_HEIGHT * 0.6 - 30,
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT * 0.4 + 30 - SCREEN_HEIGHT * 0.25 + 30,
+            backgroundColor: item.backgroundColor,
+            zIndex: 1,
           },
         ]}
       >
@@ -75,29 +89,31 @@ const DetailedRent = () => {
               width: SCREEN_WIDTH - 20,
               height: SCREEN_HEIGHT * 0.25,
               position: "absolute",
-              top: "-100%",
+              top: "-80%",
+              zIndex: 6,
             },
           ]}
           resizeMode={"cover"}
         />
-        <Text
+        <Animated.Text
+          entering={SlideInLeft.duration(400).delay(800)}
           style={[
             styles.itemName,
-            { position: "absolute", bottom: "10%", left: "10%" },
+            { position: "absolute", bottom: "40%", left: "5%" },
           ]}
         >
           {item.name}
-        </Text>
+        </Animated.Text>
       </Animated.View>
 
       <Animated.View
-        entering={SlideInDown.duration(400)}
+        entering={SlideInDown.duration(1000).delay(200)}
         style={[
           styles.whiteBox,
           {
             width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT * 0.3,
-            top: SCREEN_HEIGHT * 0.7,
+            height: SCREEN_HEIGHT * 0.25,
+            top: SCREEN_HEIGHT * 0.75,
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30,
           },
@@ -108,11 +124,11 @@ const DetailedRent = () => {
             flexDirection: "row",
             justifyContent: "space-between",
             width: SCREEN_WIDTH,
-            paddingHorizontal:15
+            paddingHorizontal: 15,
           }}
         >
           <Text style={styles.priceTag}>${item.price}/Day</Text>
-          <View style={{flexDirection:'row', gap:8}}>
+          <View style={{ flexDirection: "row", gap: 8 }}>
             <Text style={styles.priceTag}>20-22 Jul,2024</Text>
             <Fontisto name="date" size={24} color="black" />
           </View>
@@ -137,7 +153,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9A825",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    zIndex: 5,
     padding: 10,
     alignItems: "center",
   },
@@ -164,7 +179,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buyButton: {
-    width: "80%",
+    width: "100%",
     backgroundColor: "orange",
     paddingVertical: 12,
     paddingHorizontal: 24,

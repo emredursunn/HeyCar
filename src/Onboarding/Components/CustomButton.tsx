@@ -29,7 +29,7 @@ const CustomButton = ({ handleOnPress, buttonVal }: CustomButtonProps) => {
       interpolateColor(
         buttonVal.value,
         [0, SCREEN_HEIGHT, SCREEN_HEIGHT * 2],
-        ["#fff", "#fff", "orange"]
+        ["#fff", "#fff", "#fe7f2d"]
       ),
       { duration: 1000 }
     );

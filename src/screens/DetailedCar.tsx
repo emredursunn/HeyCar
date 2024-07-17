@@ -1,6 +1,4 @@
 import {
-  Button,
-  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -38,6 +36,8 @@ const DetailedCar = () => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
   const MATERIAL_COLOR = item.backgroundColor === "#c8d5b9" ? "#000" : "#fff";
   const { setVisible } = useTabBarStore();
+
+
 
   const SPEED_ICON = (
     <Ionicons name="speedometer-outline" size={24} color="black" />
@@ -114,7 +114,7 @@ const DetailedCar = () => {
             justifyContent: "space-between",
             paddingHorizontal: 10,
           }}
-          entering={FadeIn.duration(200).delay(500)}
+          entering={FadeIn.duration(500).delay(200)}
         >
           <Text
             style={{
@@ -145,21 +145,22 @@ const DetailedCar = () => {
         </Animated.View>
 
         <Animated.Text
+          entering={FadeInLeft.duration(500).delay(400)}
           style={{
             fontSize: 30,
             color: MATERIAL_COLOR,
             fontWeight: "bold",
             padding: 10,
             marginVertical: 15,
+            zIndex: 5,
           }}
-          entering={FadeInLeft.duration(200).delay(700)}
         >
           {item.name}
         </Animated.Text>
       </Animated.View>
 
       <Animated.View
-        entering={SlideInDown.duration(400).delay(900)}
+        entering={SlideInDown.duration(800).delay(1000)}
         style={{
           position: "absolute",
           top: SCREEN_HEIGHT * 0.55,
@@ -211,7 +212,7 @@ const DetailedCar = () => {
       </Animated.View>
 
       <Animated.View
-        entering={SlideInDown.duration(400).delay(700)}
+        entering={SlideInDown.duration(400).delay(800)}
         style={{
           width: SCREEN_WIDTH,
           flexDirection: "row",

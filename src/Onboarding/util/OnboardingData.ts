@@ -23,7 +23,7 @@ export const onboardingData: Onboarding[] = [
   },
   {
     id: 3,
-    image: require("../../../assets/greenmercedes.png"),
+    image: require("../../../assets/orangemercedes.png"),
     type:'image',
     title: "Rent now!",
     backgroundColor: "#71816d",

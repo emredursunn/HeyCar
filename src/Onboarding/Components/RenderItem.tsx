@@ -25,6 +25,7 @@ const RenderItem = ({ item }: RenderItemProps) => {
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => {
+    "worklet";
     return {
       opacity: OPACITY.value,
       transform: [

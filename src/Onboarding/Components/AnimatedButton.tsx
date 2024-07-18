@@ -24,6 +24,7 @@ const AnimatedButton = ({ handleOnPress, buttonVal }: AnimatedButtonProps) => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
 
   const animatedStyle = useAnimatedStyle(() => {
+    'worklet'
     const backgroundColor = withTiming(
       interpolateColor(
         buttonVal.value,

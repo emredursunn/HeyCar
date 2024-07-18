@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React from "react";
 import Animated, {
-  Extrapolation,
   interpolate,
   interpolateColor,
   SharedValue,
@@ -16,12 +15,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-interface CustomButtonProps {
+interface AnimatedButtonProps {
   handleOnPress: () => void;
   buttonVal: SharedValue<number>;
 }
 
-const CustomButton = ({ handleOnPress, buttonVal }: CustomButtonProps) => {
+const AnimatedButton = ({ handleOnPress, buttonVal }: AnimatedButtonProps) => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -61,7 +60,7 @@ const CustomButton = ({ handleOnPress, buttonVal }: CustomButtonProps) => {
   );
 };
 
-export default CustomButton;
+export default AnimatedButton;
 
 const styles = StyleSheet.create({
   button: {

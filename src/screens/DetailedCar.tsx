@@ -1,5 +1,4 @@
 import {
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -7,7 +6,7 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -24,6 +23,7 @@ import Rating from "./components/Rating";
 import Name from "./components/Name";
 import Premium from "./components/Premium";
 import Price from "./components/Price";
+import Button from "./components/Button";
 
 const DetailedCar = () => {
   const route =
@@ -91,9 +91,10 @@ const DetailedCar = () => {
       </Animated.View>
 
       <BottomSheet
+        hasEntering={true}
         duration={800}
         delay={1000}
-        style={{ height: SCREEN_HEIGHT * 0.45 - 30, zIndex: 2 }}
+        customStyle={{ height: SCREEN_HEIGHT * 0.45 - 30, zIndex: 2 }}
       >
         <Text style={styles.featuresText}>Features</Text>
 
@@ -120,12 +121,11 @@ const DetailedCar = () => {
             customStyle={{ fontSize: 30 }}
           />
 
-          <Pressable
-            style={styles.rentButton}
+          <Button
+            title={"Rent a car"}
             onPress={() => navigate("DetailedRent", { item })}
-          >
-            <Text style={{ color: "#fff", fontSize: 16 }}>Rent a car</Text>
-          </Pressable>
+            customStyle={{width:'50%'}}
+          />
         </View>
       </BottomSheet>
     </ScrollView>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     marginTop: 5,
-    paddingHorizontal:8,
+    paddingHorizontal: 8,
     alignItems: "center",
     borderTopWidth: 1,
     borderColor: "lightgray",

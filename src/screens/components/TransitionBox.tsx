@@ -19,7 +19,6 @@ const TransitionBox = ({ item, sharedTransitionStyle, customStyle }: Props) => {
       sharedTransitionStyle={sharedTransitionStyle}
       style={{
         position: "absolute",
-        top: 0,
         borderRadius: 20,
         ...customStyle,
         backgroundColor: item.backgroundColor,

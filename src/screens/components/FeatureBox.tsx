@@ -3,10 +3,9 @@ import {
   Text,
   StyleSheet,
   useWindowDimensions,
-  Image,
 } from "react-native";
-import React, { ReactNode } from "react";
-import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import React from "react";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 interface BoxProps {
   icon: any;
@@ -17,7 +16,7 @@ interface BoxProps {
   index: number;
 }
 
-const Box = ({
+const FeatureBox = ({
   icon,
   title,
   value,
@@ -53,12 +52,19 @@ const Box = ({
       <View
         style={{ flex: 1, alignItems: "flex-start", justifyContent: "center" }}
       >
-        <Text style={{ fontSize: 12, fontWeight: "600", marginBottom: 10, color:'#fff' }}>
+        <Text
+          style={{
+            fontSize: 12,
+            fontWeight: "600",
+            marginBottom: 10,
+            color: "#fff",
+          }}
+        >
           {title}
         </Text>
 
         <View style={{ flexDirection: "row", position: "absolute", bottom: 1 }}>
-          <Text style={{ fontSize: 24, fontWeight: "bold",  }}>{value}</Text>
+          <Text style={{ fontSize: 24, fontWeight: "bold" }}>{value}</Text>
           <Text
             style={{
               fontSize: 16,
@@ -83,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Box;
+export default FeatureBox;

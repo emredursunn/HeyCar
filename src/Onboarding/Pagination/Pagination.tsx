@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import Animated, { SharedValue } from "react-native-reanimated";
+import  { SharedValue } from "react-native-reanimated";
 import Dot from "./Dot";
 import { Onboarding } from "../util/OnboardingData";
 

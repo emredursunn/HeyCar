@@ -1,21 +1,30 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewStyle, useWindowDimensions } from "react-native";
+import {
+  StyleSheet,
+  ViewStyle,
+  useWindowDimensions,
+} from "react-native";
 import Animated, { SlideInDown } from "react-native-reanimated";
 
 type Props = {
-  style?: ViewStyle; // Define any additional styles you want to pass
+  customStyle?: ViewStyle; // Define any additional styles you want to pass
   delay?: number;
   duration?: number;
+  hasEntering: boolean;
   children: React.ReactNode; // Allow children to be passed
 };
 
-const BottomSheet = ({ style, children, delay, duration }: Props) => {
+const BottomSheet = ({ customStyle, children, delay, duration, hasEntering }: Props) => {
   const { width: SCREEN_WIDTH } = useWindowDimensions();
 
   return (
     <Animated.View
-      entering={SlideInDown.duration(duration ?? 0).delay(delay ?? 0)}
-      style={[styles.container, style, {width:SCREEN_WIDTH}]}
+      entering={
+        hasEntering
+          ? SlideInDown.duration(duration ?? 0).delay(delay ?? 0)
+          : undefined
+      }
+      style={[styles.container, customStyle, { width: SCREEN_WIDTH }]}
     >
       {children}
     </Animated.View>
@@ -25,7 +34,7 @@ const BottomSheet = ({ style, children, delay, duration }: Props) => {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    justifyContent:'flex-start',
+    justifyContent: "flex-start",
     bottom: 0,
     left: 0,
     right: 0,

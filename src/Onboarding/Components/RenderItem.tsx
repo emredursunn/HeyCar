@@ -1,20 +1,12 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import React, { useEffect } from "react";
 import { Onboarding } from "../util/OnboardingData";
 import LottieView from "lottie-react-native";
 import Animated, {
-  FadeInLeft,
   SlideInLeft,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
 

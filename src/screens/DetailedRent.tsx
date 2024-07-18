@@ -10,10 +10,16 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
-import Animated, { SlideInDown, SlideInLeft } from "react-native-reanimated";
 import { Fontisto } from "@expo/vector-icons";
 import { transitionShort } from "../util/util";
 import TransitionBox from "./components/TransitionBox";
+import BottomSheet from "./components/BottomSheet";
+import TransitionCar from "./components/TransitionCar";
+import Name from "./components/Name";
+import Price from "./components/Price";
+import Button from "./components/Button";
+
+const BORDER_RADIUS = 30;
 
 const DetailedRent = () => {
   const route =
@@ -38,89 +44,64 @@ const DetailedRent = () => {
         <Marker coordinate={{ ...item.location }} />
       </MapView>
 
-      {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
+      {/* THIS IS JUST BEING VISIBLE IN TRANSITION SECTION */}
       <TransitionBox
         item={item}
         sharedTransitionStyle={transitionShort}
         customStyle={{
-          top: SCREEN_HEIGHT * 0.6 - 30,
+          bottom: 0,
           width: SCREEN_WIDTH,
-          height: SCREEN_HEIGHT * 0.4 + 30 - SCREEN_HEIGHT * 0.25 + 30,
+          height: SCREEN_HEIGHT * 0.4 + BORDER_RADIUS,
         }}
       />
       {/*************************************/}
 
-      <Animated.View
-        style={[
-          styles.orangeBox,
-          {
-            top: SCREEN_HEIGHT * 0.6 - 30,
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT * 0.4 + 30 - SCREEN_HEIGHT * 0.25 + 30,
-            backgroundColor: item.backgroundColor,
-            zIndex: 1,
-          },
-        ]}
+      <BottomSheet
+        hasEntering={false}
+        customStyle={{
+          bottom: 0,
+          height: SCREEN_HEIGHT * 0.4 + BORDER_RADIUS,
+          backgroundColor: item.backgroundColor,
+        }}
       >
-        <Animated.Image
-          sharedTransitionTag={`car-${item.id}`}
+        <TransitionCar
+          item={item}
           sharedTransitionStyle={transitionShort}
-          source={item.image}
-          style={[
-            styles.image,
-            {
-              width: SCREEN_WIDTH - 20,
-              height: SCREEN_HEIGHT * 0.25,
-              position: "absolute",
-              top: "-80%",
-              zIndex: 6,
-            },
-          ]}
-          resizeMode={"cover"}
-        />
-        <Animated.Text
-          entering={SlideInLeft.duration(400).delay(800)}
-          style={[
-            styles.itemName,
-            { position: "absolute", bottom: "40%", left: "5%" },
-          ]}
-        >
-          {item.name}
-        </Animated.Text>
-      </Animated.View>
-
-      <Animated.View
-        entering={SlideInDown.duration(1000).delay(200)}
-        style={[
-          styles.whiteBox,
-          {
-            width: SCREEN_WIDTH,
+          customStyle={{
             height: SCREEN_HEIGHT * 0.25,
-            top: SCREEN_HEIGHT * 0.75,
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-          },
-        ]}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: SCREEN_WIDTH,
-            paddingHorizontal: 15,
+            width: SCREEN_WIDTH - 20,
+            top: "-35%",
+            position: "absolute",
           }}
-        >
-          <Text style={styles.priceTag}>${item.price}/Day</Text>
+        />
+
+        <Name
+          name={item.name}
+          color="#fff"
+          customStyle={{ position: "absolute", top: "20%" }}
+        />
+      </BottomSheet>
+
+      <BottomSheet
+        hasEntering={true}
+        delay={1000}
+        duration={200}
+        customStyle={{
+          zIndex: 1,
+          backgroundColor: "#fff",
+          paddingVertical:'12%',
+        }}
+      >
+        <View style={[styles.detailRow, { width: SCREEN_WIDTH }]}>
+          <Price price={item.price} color="#000" customStyle={styles.detail} />
           <View style={{ flexDirection: "row", gap: 8 }}>
-            <Text style={styles.priceTag}>20-22 Jul,2024</Text>
+            <Text style={styles.detail}>20-22 Jul,2024</Text>
             <Fontisto name="date" size={24} color="black" />
           </View>
         </View>
-
-        <Pressable style={styles.buyButton}>
-          <Text style={styles.buyButtonText}>Rent Now</Text>
-        </Pressable>
-      </Animated.View>
+        
+        <Button title="Rent Now" customStyle={{width:'100%'}}/>
+      </BottomSheet>
     </View>
   );
 };
@@ -131,35 +112,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  orangeBox: {
-    position: "absolute",
-    backgroundColor: "#F9A825",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    padding: 10,
-    alignItems: "center",
-  },
-  image: {
-    marginBottom: 10,
-  },
-  itemName: {
-    fontSize: 32,
-    fontWeight: "600",
-    color: "#fff",
-  },
-  whiteBox: {
-    position: "absolute",
-    backgroundColor: "#FFF",
-    zIndex: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  priceTag: {
+  detail: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#000",
-    marginBottom: 10,
   },
   buyButton: {
     width: "100%",
@@ -174,5 +129,10 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#fff",
     textAlign: "center",
+  },
+  detailRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
   },
 });

@@ -2,7 +2,7 @@ import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { onboardingData } from "./util/OnboardingData";
 import RenderItem from "./Components/RenderItem";
-import CustomButton from "./Components/CustomButton";
+import AnimatedButton from "./Components/AnimatedButton";
 import Animated, { useSharedValue } from "react-native-reanimated";
 import Pagination from "./Pagination/Pagination";
 import { useNavigation } from "@react-navigation/native";
@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import useTabBarStore from "../context/tabBarStore";
 
 const Onboarding = () => {
-  const { replace,navigate } =
+  const { replace } =
     useNavigation<NativeStackNavigationProp<HomeStackParams, "Onboarding">>();
   const { height: SCREEN_HEIGHT } = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,7 +45,7 @@ const Onboarding = () => {
         )}
       </View>
       <View style={{ flex: 2 }}>
-        <CustomButton handleOnPress={handleOnPress} buttonVal={buttonVal} />
+        <AnimatedButton handleOnPress={handleOnPress} buttonVal={buttonVal} />
       </View>
     </Animated.View>
   );

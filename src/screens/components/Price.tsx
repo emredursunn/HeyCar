@@ -9,7 +9,7 @@ type Props = {
 
 const Price = ({ price, color, customStyle }: Props) => {
   return (
-    <View style={{flexDirection:'row', alignItems:'center', gap:5}}> 
+    <View style={{flexDirection:'row', alignItems:'center',gap:5}}> 
       <Text
         style={[
           styles.price,

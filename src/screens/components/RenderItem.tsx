@@ -6,12 +6,15 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { Car } from "../../util/CarsData";
+import { Car } from "../../util/data";
 import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 
-import { AntDesign } from "@expo/vector-icons";
 import useTabBarStore from "../../context/tabBarStore";
 import { transitionLong, transitionShort } from "../../util/util";
+import TransitionBox from "./TransitionBox";
+import Rating from "./Rating";
+import Price from "./Price";
+import TransitionCar from "./TransitionCar";
 
 interface ItemProps {
   item: Car;
@@ -38,22 +41,17 @@ const RenderItem = ({
 
   return (
     <Animated.View
+      entering={FadeInDown.delay(200 * index)}
       style={[
         styles.container,
         { width: container_width, height: container_height },
       ]}
-      entering={FadeInDown.delay(200 * index)}
     >
       {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
-      <Animated.View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: item.backgroundColor,
-          zIndex: 1,
-          borderRadius: 20,
-        }}
-        sharedTransitionTag={`box-${item.id}`}
+      <TransitionBox
+        item={item}
         sharedTransitionStyle={transitionShort}
+        customStyle={{ width: container_width, height: container_height }}
       />
       {/********************************************************/}
 
@@ -61,50 +59,27 @@ const RenderItem = ({
         style={[styles.pressable, { zIndex: 2 }]}
         onPress={handleOnPress}
       >
-        <View style={styles.rating}>
-          <AntDesign
-            name="star"
-            size={18}
-            color={
-              item.backgroundColor === "orange" ? MATERIAL_COLOR : "orange"
-            }
-          />
-          <Text style={{ fontSize: 14, color: MATERIAL_COLOR }}>
-            {item.rating}
-          </Text>
+        <View style={styles.ratingContainer}>
+          <Rating rating={item.rating} color={MATERIAL_COLOR} backgroundColor={item.backgroundColor} />
         </View>
 
-        <View style={{ flex: 5, width: "150%" }}>
-          <Animated.Image
-            entering={FadeInRight.duration(800).delay(400 * index)}
-            sharedTransitionTag={`car-${item.id}`}
+        <Animated.View
+          entering={FadeInRight.duration(800).delay(400 * index)}
+          style={{ flex: 5, width: "150%" }}
+        >
+          <TransitionCar
+            item={item}
             sharedTransitionStyle={transitionLong}
-            source={item.image}
-            style={styles.image}
-            resizeMode={"cover"}
+            customStyle={{ width: "100%", height: "100%" }}
           />
-        </View>
+        </Animated.View>
 
         <Text style={[styles.title, { color: MATERIAL_COLOR }]}>
           {item.name}
         </Text>
+
         <View style={styles.priceContainer}>
-          <Text
-            style={[
-              styles.price,
-              { fontWeight: "bold", color: MATERIAL_COLOR },
-            ]}
-          >
-            $ {item.price}
-          </Text>
-          <Text
-            style={[
-              styles.price,
-              { color: MATERIAL_COLOR, fontStyle: "italic" },
-            ]}
-          >
-            /Day
-          </Text>
+          <Price price={item.price} color={MATERIAL_COLOR} />
         </View>
       </Pressable>
     </Animated.View>
@@ -133,13 +108,6 @@ const styles = StyleSheet.create({
     height: "100%",
     zIndex: 5,
   },
-  rating: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-    alignSelf: "flex-start",
-  },
   title: {
     flex: 1,
     fontSize: 16,
@@ -152,7 +120,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 10,
   },
-  price: {
-    fontSize: 14,
+  ratingContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    alignSelf: "flex-start",
   },
 });

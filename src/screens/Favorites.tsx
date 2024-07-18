@@ -1,8 +1,8 @@
 import { ScrollView, useWindowDimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import useFavoriteStore from "../context/favoriteStore";
-import { Car, carData } from "../util/CarsData";
-import RenderItem from "./compoents/RenderItem";
+import { Car, carData } from "../util/data";
+import RenderItem from "./components/RenderItem";
 import Animated, { SlideInLeft } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

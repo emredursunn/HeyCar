@@ -1,10 +1,10 @@
 import { ScrollView, SectionList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { carData } from "../util/CarsData";
-import RenderItem from "./compoents/RenderItem";
+import { carData } from "../util/data";
+import RenderItem from "./components/RenderItem";
 
 import { groupDataByType } from "../util/util";
-import ProfileHeader from "./compoents/ProfileHeader";
+import ProfileHeader from "./components/ProfileBar";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { HomeStackParams } from "../navigation/HomeStack";

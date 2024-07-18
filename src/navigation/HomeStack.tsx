@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Onboarding from "../Onboarding/Onboarding";
 import Home from "../screens/Home";
 import DetailedCar from "../screens/DetailedCar";
-import { Car } from "../util/CarsData";
+import { Car } from "../util/data";
 import DetailedRent from "../screens/DetailedRent";
 
 export type HomeStackParams = {

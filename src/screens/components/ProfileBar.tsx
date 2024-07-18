@@ -13,24 +13,28 @@ const ProfileHeader = ({ name, description, image }: Props) => {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        alignSelf:'center',
+        alignSelf: "center",
         alignItems: "center",
         width: "95%",
-        backgroundColor:'#fff',
+        backgroundColor: "#fff",
         padding: 8,
-        borderRadius:10,
-        marginTop:10,
-        shadowColor:'#000',
-        shadowOpacity:1,
-        shadowOffset:{width:2,height:2},
-        shadowRadius:2,
-        borderWidth:1,
-        borderColor:'lightgray'
+        borderRadius: 10,
+        marginTop: 10,
+        shadowColor: "#000",
+        shadowOpacity: 1,
+        shadowOffset: { width: 2, height: 2 },
+        shadowRadius: 2,
+        borderWidth: 1,
+        borderColor: "lightgray",
       }}
     >
-      <View style={{ justifyContent:'center' }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", fontStyle:'italic' }}>{name}</Text>
-        <Text style={{ fontSize: 16, color: "gray", fontStyle:'italic' }}>{description}</Text>
+      <View style={{ justifyContent: "center" }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>
+          {name}
+        </Text>
+        <Text style={{ fontSize: 16, color: "gray", fontStyle: "italic" }}>
+          {description}
+        </Text>
       </View>
       <Image
         source={image}

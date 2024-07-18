@@ -1,30 +1,29 @@
 import {
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
   View,
 } from "react-native";
 import React from "react";
-import Animated, {
-  FadeIn,
-  FadeInLeft,
-  SlideInDown,
-} from "react-native-reanimated";
+import Animated, { FadeIn, SlideInDown } from "react-native-reanimated";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import Box from "./compoents/Box";
-import { FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Header from "./compoents/Header";
-import { AntDesign } from "@expo/vector-icons";
+import FeatureBox from "./components/FeatureBox";
+import Header from "./components/Header";
 import useTabBarStore from "../context/tabBarStore";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
 import { transitionLong } from "../util/util";
-
-const BORDER_RADIUS = 30;
+import { featureData } from "../util/data";
+import TransitionBox from "./components/TransitionBox";
+import BottomSheet from "./components/BottomSheet";
+import TransitionCar from "./components/TransitionCar";
+import Rating from "./components/Rating";
+import Name from "./components/Name";
+import Premium from "./components/Premium";
+import Price from "./components/Price";
 
 const DetailedCar = () => {
   const route =
@@ -36,32 +35,13 @@ const DetailedCar = () => {
   const MATERIAL_COLOR = item.backgroundColor === "#c8d5b9" ? "#000" : "#fff";
   const { setVisible } = useTabBarStore();
 
-  const SPEED_ICON = (
-    <Ionicons name="speedometer-outline" size={24} color="black" />
-  );
-
-  const TIME_ICON = <FontAwesome name="clock-o" size={24} color="black" />;
-
-  const ENGINE_ICON = (
-    <MaterialCommunityIcons name="car-cog" size={24} color="black" />
-  );
-
   return (
-    <View style={styles.container}>
-
-      {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
-      <Animated.View
-        sharedTransitionTag={`box-${item.id}`}
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* THIS IS JUST BEING VISIBLE IN TRANSITION SECTION */}
+      <TransitionBox
+        item={item}
         sharedTransitionStyle={transitionLong}
-        style={{
-          position: "absolute",
-          top: 0,
-          borderRadius: 20,
-          width: SCREEN_WIDTH,
-          height: SCREEN_HEIGHT,
-          backgroundColor: item.backgroundColor,
-          zIndex: 0,
-        }}
+        customStyle={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
       />
       {/**********************************/}
 
@@ -85,180 +65,70 @@ const DetailedCar = () => {
           materialColor={MATERIAL_COLOR}
         />
 
-        <Animated.Image
-          sharedTransitionTag={`car-${item.id}`}
+        <TransitionCar
+          item={item}
           sharedTransitionStyle={transitionLong}
-          source={item.image}
-          style={{
+          customStyle={{
             width: SCREEN_WIDTH,
             height: SCREEN_WIDTH * 0.5,
-            zIndex: 5,
             marginBottom: 10,
           }}
-          resizeMode={"cover"}
         />
 
         <Animated.View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: 10,
-          }}
-          entering={FadeIn.duration(500).delay(200)}
+          entering={FadeIn.duration(500).delay(1000)}
+          style={styles.premiumContainer}
         >
-          <Text
-            style={{
-              color: item.backgroundColor === "orange" ? "#fff" : "orange",
-              fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            Premium
-          </Text>
-
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <AntDesign
-              name="star"
-              size={14}
-              color={item.backgroundColor === "orange" ? "#fff" : "orange"}
-            />
-            <Text
-              style={{
-                color: item.backgroundColor === "orange" ? "#fff" : "orange",
-                fontSize: 14,
-                fontWeight: "bold",
-              }}
-            >
-              {item.rating}
-            </Text>
-          </View>
+          <Premium backgroundColor={item.backgroundColor} />
+          <Rating
+            rating={item.rating}
+            color={MATERIAL_COLOR}
+            backgroundColor={item.backgroundColor}
+          />
         </Animated.View>
 
-        <Animated.Text
-          entering={FadeInLeft.duration(500).delay(400)}
-          style={{
-            fontSize: 30,
-            color: MATERIAL_COLOR,
-            fontWeight: "bold",
-            padding: 10,
-            marginVertical: 15,
-            zIndex: 5,
-          }}
-        >
-          {item.name}
-        </Animated.Text>
+        <Name name={item.name} color={MATERIAL_COLOR} />
       </Animated.View>
 
-      <Animated.View
-        entering={SlideInDown.duration(800).delay(1000)}
-        style={{
-          position: "absolute",
-          top: SCREEN_HEIGHT * 0.55,
-          width: SCREEN_WIDTH,
-          height: SCREEN_HEIGHT,
-          backgroundColor: "#faf3dd",
-          borderTopLeftRadius: BORDER_RADIUS,
-          borderTopRightRadius: BORDER_RADIUS,
-          zIndex: 3,
-        }}
+      <BottomSheet
+        duration={800}
+        delay={1000}
+        style={{ height: SCREEN_HEIGHT * 0.45 - 30, zIndex: 2 }}
       >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "#000",
-            padding: 16,
-            fontWeight: "600",
-          }}
-        >
-          Features
-        </Text>
+        <Text style={styles.featuresText}>Features</Text>
 
         <View style={{ flexDirection: "row" }}>
-          <Box
-            background="orange" //f8e16c c0d684
-            title="ENGINE OUTPUT"
-            valueType="hp"
-            value={item.features.enginePower}
-            icon={ENGINE_ICON}
-            index={1}
-          />
-          <Box
-            background="orange" //ff8c42 aab2ff
-            title="HIGHEST SPEED"
-            valueType="km/h"
-            value={item.features.maxSpeed}
-            icon={SPEED_ICON}
-            index={2}
-          />
-          <Box
-            background="orange" //ffba08 ffaf87
-            title="TIME TO 100 Km/h"
-            valueType="sec"
-            value={item.features.zeroToHundred}
-            icon={TIME_ICON}
-            index={3}
-          />
+          {featureData.map((feature, index) => (
+            <FeatureBox
+              key={index}
+              background={feature.background}
+              title={feature.title}
+              valueType={feature.valueType}
+              value={
+                item.features[feature.valueKey as keyof typeof item.features]
+              }
+              icon={feature.icon}
+              index={index + 1}
+            />
+          ))}
         </View>
-      </Animated.View>
 
-      <Animated.View
-        entering={SlideInDown.duration(400).delay(800)}
-        style={{
-          width: SCREEN_WIDTH,
-          flexDirection: "row",
-          borderTopLeftRadius: 26,
-          borderTopRightRadius: 26,
-          justifyContent: "space-between",
-          backgroundColor: "#fff",
-          padding: 8,
-          position: "absolute",
-          bottom: 0,
-          zIndex: 4,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            paddingHorizontal: 8,
-          }}
-        >
-          <Text style={{ fontSize: 16, color: "#000", paddingTop: 8 }}>$</Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 36,
-              color: "#000",
-              margin: 5,
-            }}
+        <View style={styles.paymentContainer}>
+          <Price
+            price={item.price}
+            color={"#000"}
+            customStyle={{ fontSize: 30 }}
+          />
+
+          <Pressable
+            style={styles.rentButton}
+            onPress={() => navigate("DetailedRent", { item })}
           >
-            {item.price}
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              paddingTop: 8,
-              color: "gray",
-              fontStyle: "italic",
-            }}
-          >
-            /Day
-          </Text>
+            <Text style={{ color: "#fff", fontSize: 16 }}>Rent a car</Text>
+          </Pressable>
         </View>
-        <Pressable
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            paddingHorizontal: 60,
-            borderRadius: 20,
-            backgroundColor: "orange",
-          }}
-          onPress={() => navigate("DetailedRent", { item })}
-        >
-          <Text style={{ color: "#fff", fontSize: 16 }}>Rent a car</Text>
-        </Pressable>
-      </Animated.View>
-    </View>
+      </BottomSheet>
+    </ScrollView>
   );
 };
 
@@ -266,6 +136,36 @@ export default DetailedCar;
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
+  },
+
+  premiumContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+  },
+  featuresText: {
+    fontSize: 20,
+    color: "#000",
+    padding: 14,
+    fontWeight: "600",
+  },
+  paymentContainer: {
+    justifyContent: "space-between",
+    flexDirection: "row",
     flex: 1,
+    marginTop: 5,
+    paddingHorizontal:8,
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderColor: "lightgray",
+  },
+  rentButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 60,
+    paddingVertical: 20,
+    borderRadius: 20,
+    backgroundColor: "orange",
   },
 });

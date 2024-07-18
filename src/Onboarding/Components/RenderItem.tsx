@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import React, { useEffect } from "react";
-import { Onboarding } from "./util/OnboardingData";
+import { Onboarding } from "../util/OnboardingData";
 import LottieView from "lottie-react-native";
 import Animated, {
   FadeInLeft,

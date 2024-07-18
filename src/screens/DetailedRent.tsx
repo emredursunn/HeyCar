@@ -10,12 +10,10 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
-import Animated, {
-  SlideInDown,
-  SlideInLeft,
-} from "react-native-reanimated";
+import Animated, { SlideInDown, SlideInLeft } from "react-native-reanimated";
 import { Fontisto } from "@expo/vector-icons";
 import { transitionShort } from "../util/util";
+import TransitionBox from "./components/TransitionBox";
 
 const DetailedRent = () => {
   const route =
@@ -24,7 +22,6 @@ const DetailedRent = () => {
     >();
   const item = route.params.item;
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
-
 
   return (
     <View style={styles.container}>
@@ -42,19 +39,14 @@ const DetailedRent = () => {
       </MapView>
 
       {/* THIS WIEW IS JUST BEING VISIBLE IN TRANSITION SECTION */}
-      <Animated.View
-        sharedTransitionTag={`box-${item.id}`}
+      <TransitionBox
+        item={item}
         sharedTransitionStyle={transitionShort}
-        style={[
-          styles.orangeBox,
-          {
-            top: SCREEN_HEIGHT * 0.6 - 30,
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT * 0.4 + 30 - SCREEN_HEIGHT * 0.3 + 30,
-            backgroundColor: item.backgroundColor,
-            zIndex: 1,
-          },
-        ]}
+        customStyle={{
+          top: SCREEN_HEIGHT * 0.6 - 30,
+          width: SCREEN_WIDTH,
+          height: SCREEN_HEIGHT * 0.4 + 30 - SCREEN_HEIGHT * 0.25 + 30,
+        }}
       />
       {/*************************************/}
 

@@ -1,3 +1,8 @@
+import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+
 export interface Car {
   id: number;
   name: string;
@@ -125,5 +130,40 @@ export const carData: Car[] = [
       enginePower: 4.3,
       zeroToHundred: 2.2,
     },
+  },
+];
+
+
+const SPEED_ICON = (
+  <Ionicons name="speedometer-outline" size={24} color="black" />
+);
+
+const TIME_ICON = <FontAwesome name="clock-o" size={24} color="black" />;
+
+const ENGINE_ICON = (
+  <MaterialCommunityIcons name="car-cog" size={24} color="black" />
+);
+
+export const featureData = [
+  {
+    background: "orange", // f8e16c c0d684
+    title: "ENGINE OUTPUT",
+    valueType: "hp",
+    valueKey: "enginePower",
+    icon: ENGINE_ICON,
+  },
+  {
+    background: "orange", // ff8c42 aab2ff
+    title: "HIGHEST SPEED",
+    valueType: "km/h",
+    valueKey: "maxSpeed",
+    icon: SPEED_ICON,
+  },
+  {
+    background: "orange", // ffba08 ffaf87
+    title: "TIME TO 100 Km/h",
+    valueType: "sec",
+    valueKey: "zeroToHundred",
+    icon: TIME_ICON,
   },
 ];

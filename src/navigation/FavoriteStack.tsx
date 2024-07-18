@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetailedCar from "../screens/DetailedCar";
 import Favorites from "../screens/Favorites";
-import { Car } from "../util/CarsData";
+import { Car } from "../util/data";
 import DetailedRent from "../screens/DetailedRent";
 
 export type FavoriteStackParams = {

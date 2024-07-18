@@ -12,7 +12,7 @@ import { HomeStackParams } from "../navigation/HomeStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import FeatureBox from "./components/FeatureBox";
 import Header from "./components/Header";
-import useTabBarStore from "../context/tabBarStore";
+import useTabBarStore from "../Store/tabBarStore";
 import { FavoriteStackParams } from "../navigation/FavoriteStack";
 import { transitionLong } from "../util/util";
 import { featureData } from "../util/data";

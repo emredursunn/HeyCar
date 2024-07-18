@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeStack } from "./HomeStack";
 import { FavoriteStack } from "./FavoriteStack";
-import useTabBarStore from "../context/tabBarStore";
+import useTabBarStore from "../Store/tabBarStore";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 

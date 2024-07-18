@@ -8,7 +8,7 @@ import Pagination from "./Pagination/Pagination";
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackParams } from "../navigation/HomeStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import useTabBarStore from "../context/tabBarStore";
+import useTabBarStore from "../Store/tabBarStore";
 
 const Onboarding = () => {
   const { replace } =

@@ -5,7 +5,7 @@ import Animated, { FadeInLeft } from "react-native-reanimated";
 type Props = {
   name: string;
   color: string;
-  customStyle: TextStyle;
+  customStyle?: TextStyle;
 };
 
 const Name = ({ name, color, customStyle }: Props) => {

@@ -3,7 +3,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import useFavoriteStore from "../../context/favoriteStore";
+import useFavoriteStore from "../../Store/favoriteStore";
 
 interface HeaderProps {
   goBack: () => void;

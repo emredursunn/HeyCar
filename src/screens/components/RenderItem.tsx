@@ -9,7 +9,7 @@ import React from "react";
 import { Car } from "../../util/data";
 import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 
-import useTabBarStore from "../../context/tabBarStore";
+import useTabBarStore from "../../Store/tabBarStore";
 import { transitionLong, transitionShort } from "../../util/util";
 import TransitionBox from "./TransitionBox";
 import Rating from "./Rating";
